@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Time Converter</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      :root {
+        --primary: #3a86ff;
+        --background: #f8f9fa;
+        --card: #ffffff;
+        --text: #212529;
+        --border: #dee2e6;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, sans-serif;
+        background-color: var(--background);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+      }
+
+      #root {
+        width: 100%;
+        max-width: 380px;
+      }
+
+      .converter-container {
+        background-color: var(--card);
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        padding: 2rem;
+        width: 100%;
+      }
+
+      .title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .input-group {
+        margin-bottom: 1.25rem;
+        width: 100%;
+      }
+
+      label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--text);
+      }
+
+      input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-size: 1rem;
+        background-color: var(--background);
+        color: var(--text);
+        transition: border-color 0.15s ease-in-out;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(58, 134, 255, 0.2);
+      }
+
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      const Container = () => {
+        const [minutes, setMinutes] = React.useState(0);
+        const [hours, setHours] = React.useState(0);
+        const [seconds, setSeconds] = React.useState(0);
+
+        const handleMinutesChange = (e) => {
+          setMinutes(Number(e.target.value));
+          setHours(Number((e.target.value / 60).toFixed(2)));
+          setSeconds(e.target.value * 60);
+        };
+
+        const handleHoursChange = (e) => {
+          setMinutes(e.target.value * 60);
+          setHours(Number(e.target.value));
+          setSeconds(e.target.value * 3600);
+        };
+
+        const handleSecondsChange = (e) => {
+          setSeconds(Number(e.target.value));
+          setMinutes((e.target.value / 60).toFixed(2));
+          setHours((e.target.value / 3600).toFixed(2));
+        };
+
+        return (
+          <div className="converter-container">
+            <h1 className="title">Time Converter</h1>
+
+            <div className="input-group">
+              <label htmlFor="hours">Hours</label>
+              <input
+                type="number"
+                id="hours"
+                value={hours}
+                onChange={handleHoursChange}
+              />
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="minutes">Minutes</label>
+              <input
+                type="number"
+                id="minutes"
+                value={minutes}
+                onChange={handleMinutesChange}
+              />
+            </div>
+
+            <div className="input-group">
+              <label htmlFor="seconds">Seconds</label>
+              <input
+                type="number"
+                id="seconds"
+                value={seconds}
+                onChange={handleSecondsChange}
+              />
+            </div>
+          </div>
+        );
+      };
+
+      function MyApp() {
+        return <Container />;
+      }
+
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+      root.render(<MyApp />);
+    </script>
+    <!--
+      Note: this page is a great way to try React but it's not suitable for production.
+      It slowly compiles JSX with Babel in the browser and uses a large development build of React.
+
+      Read this page for starting a new React project with JSX:
+      https://react.dev/learn/start-a-new-react-project
+
+      Read this page for adding React with JSX to an existing project:
+      https://react.dev/learn/add-react-to-an-existing-project
+    -->
+  </body>
+</html>
