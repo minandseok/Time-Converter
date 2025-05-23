@@ -1,1 +1,3 @@
-Cursor로 만든 시간 변환기
+시간 변환기
+
+IDE: Cursor
